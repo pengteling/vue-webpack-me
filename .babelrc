@@ -3,6 +3,8 @@
     "env"
   ],
   "plugins": [
-    "transform-vue-jsx"
+    "transform-vue-jsx",
+    "jsx-vue-functional",
+    "jsx-v-model"
   ]
 }
