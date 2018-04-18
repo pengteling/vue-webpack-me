@@ -15,7 +15,7 @@ const config = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          extractCSS: true
+          extractCSS: isDev ? false : true
         }
       },
       {
@@ -53,7 +53,7 @@ const config = {
   ]
 }
 if (isDev) {
-
+  config.devtool = 'cheap-model-eval-source-map'
   config.devServer = {
     port: 8089,
     host: '0.0.0.0',
@@ -61,7 +61,8 @@ if (isDev) {
     historyApiFallback: true
   }
   config.plugins.push(
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   )
   config.module.rules.push(
     {
