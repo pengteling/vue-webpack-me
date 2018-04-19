@@ -1,67 +1,47 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
-    </nav>
-    <Child></Child>
+    <mplayer 
+      ref="mplayer"
+      :url="url"
+      :autoplay="autoplay"
+      :paused="paused"
+      :volume="volume"
+      @timeupdate="timeupdate"
+    />
+    <input type="range" v-model="volume" ref="volume">
+    <button ref="playPause" @click="playPause">播放</button>
+    <span class="timer">{{ currentTime  }} / {{ duration }}</span>
   </div>
 </template>
 <script>
-// import "./style/comm.scss"
-import Child from './Child.vue'
-import $ from 'jquery'
-import "bootstrap/scss/bootstrap.scss"
-import "bootstrap"
+import { MUSIC_LIST } from './data/Musiclist.js'
+// import Mplayer  from './Mplayer.vue'
+import Mplayer  from './../dist/Mplayer.js'
 export default {
-  name: "App",
-  data() {
+  data(){
     return {
-      msg: 123
+      url : MUSIC_LIST[0].file,
+      volume:80,
+      autoplay:false,
+      currentTime:0,
+      duration:0,
+      paused:true
     }
   },
   components:{
-    Child
+    Mplayer
   },
-  mounted(){
-    $(".navbar").on("click",()=>{
-      alert("jquery 弹出的")
-    })
+  methods:{
+    playPause(){
+      // this.$refs.mplayer.playPause()
+      this.paused = !this.paused
+      this.$refs.playPause.textContent = this.paused? '播放':'暂停'
+    },
+    timeupdate(currentTime,duration){
+      this.currentTime = currentTime
+      this.duration = duration
+    }
   }
 }
 </script>
-<style lang="scss">
-// @import "~bootstrap/scss/bootstrap";
 
-</style>
