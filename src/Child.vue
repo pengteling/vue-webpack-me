@@ -35,33 +35,12 @@
         </form>
       </div>
     </nav>
-    <Child></Child>
   </div>
 </template>
 <script>
-// import "./style/comm.scss"
-import Child from './Child.vue'
-import $ from 'jquery'
 import "bootstrap/scss/bootstrap.scss"
 import "bootstrap"
 export default {
-  name: "App",
-  data() {
-    return {
-      msg: 123
-    }
-  },
-  components:{
-    Child
-  },
-  mounted(){
-    $(".navbar").on("click",()=>{
-      alert("jquery 弹出的")
-    })
-  }
+  
 }
 </script>
-<style lang="scss">
-// @import "~bootstrap/scss/bootstrap";
-
-</style>
