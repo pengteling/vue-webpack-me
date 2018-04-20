@@ -7,6 +7,7 @@
       :paused="paused"
       :volume="volume"
       @timeupdate="timeupdate"
+      @loadedmetadata="loadedmetadata"
     />
     <input type="range" v-model="volume" ref="volume">
     <button ref="playPause" @click="playPause">播放</button>
@@ -15,8 +16,8 @@
 </template>
 <script>
 import { MUSIC_LIST } from './data/Musiclist.js'
-// import Mplayer  from './Mplayer.vue'
-import Mplayer  from './../dist/Mplayer.js'
+import Mplayer  from './Mplayer.vue'
+// import Mplayer  from './../dist/Mplayer.js'
 export default {
   data(){
     return {
@@ -37,8 +38,11 @@ export default {
       this.paused = !this.paused
       this.$refs.playPause.textContent = this.paused? '播放':'暂停'
     },
-    timeupdate(currentTime,duration){
+    timeupdate(currentTime){
       this.currentTime = currentTime
+      //this.duration = duration
+    },
+    loadedmetadata(duration){
       this.duration = duration
     }
   }

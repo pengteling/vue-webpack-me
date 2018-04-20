@@ -2,8 +2,9 @@
   <div class="mplayer">
     <audio 
       ref="player"
-      :src="url"
+      :src="url"      
       @timeupdate="timeupdate"
+      @loadedmetadata="loadedmetadata"
     />
   </div>
 </template>
@@ -68,10 +69,14 @@ export default {
     },
     timeupdate(){
       console.log(this.audio.currentTime)
-      this.$emit("timeupdate",this.audio.currentTime,this.audio.duration)
+      this.$emit("timeupdate",this.audio.currentTime)
     },
     changeVolume(volume){
       this.audio.volume = volume / 100
+    },
+    loadedmetadata(){
+      console.log(this.audio.duration)
+      this.$emit("loadedmetadata",this.audio.duration)
     }
   }
   
